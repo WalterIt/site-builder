@@ -1,3 +1,13 @@
+export const SIGN_IN = "/sign-in";
+export const SIGN_UP = "/sign-up";
+export const AGENCY = "/agency";
+export const SUBACCOUNT = "/subaccount";
+
+export const AGENCY_OWNER = "AGENCY_OWNER";
+export const AGENCY_ADMIN = "AGENCY_ADMIN";
+export const SUBACCOUNT_USER = "SUBACCOUNT_USER";
+export const SUBACCOUNT_GUEST = "SUBACCOUNT_GUEST";
+
 export const pricingCards = [
     {
       title: 'Starter',
