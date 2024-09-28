@@ -1,3 +1,4 @@
+import AgencyDetails from "@/components/forms/agency-details";
 import { SUBACCOUNT } from "@/lib/constants";
 import { getAuthUserDetails, verifyAndAcceptInvitation } from "@/lib/queries";
 import { currentUser } from "@clerk/nextjs/server";
@@ -44,8 +45,7 @@ const AgencyPage =  async ({
   return (
     <div className="flex justify-center items-center mt-4">
     <div>
-      <h1 className="text-4xl">Create An Agency</h1>
-      {/* <AgencyDetails /> */}
+      <AgencyDetails />
     </div>
   </div>
   )
