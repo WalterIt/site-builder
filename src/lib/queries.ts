@@ -74,7 +74,7 @@ export const saveActivityLogsNotification = async ({
   }
 
   if (!userData) {
-    console.error("Could not find a user data");
+    console.error("Could not find a user data!");
     return;
   }
 
@@ -293,6 +293,8 @@ export const upsertAgency = async (agency: Agency, price?: Plan) => {
         },
       },
     });
+
+    console.log(agencyDetails);
 
     return agencyDetails;
   } catch (error: any) {

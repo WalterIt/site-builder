@@ -1,7 +1,7 @@
 "use client";
 
 import { Agency } from "@prisma/client";
-// import { v4 } from "uuid";
+import  { v4 }  from "uuid";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -100,7 +100,8 @@ const AgencyDetails = ({ data }: Props) => {
 
   const handleSubmit = async (values: z.infer<typeof FormSchema>) => {
     let newUserData;
-    let custId;
+    // let customerId;
+
     try {
       if (!data?.id) {
         const bodyData = {
@@ -125,12 +126,12 @@ const AgencyDetails = ({ data }: Props) => {
           },
         };
       }
-      // WIP: custId
+      // WIP: customerId
       newUserData = await initUser({ role: AGENCY_OWNER });
 
       if (!data?.id) {
-        const response = await upsertAgency({
-          // id: data?.id ? data.id : v4(),
+        await upsertAgency({
+          id: data?.id ? data.id : v4(),
           address: values.address,
           agencyLogo: values.agencyLogo,
           city: values.city,
@@ -147,12 +148,10 @@ const AgencyDetails = ({ data }: Props) => {
           goal: 5,
         });
         toast({
-          title: "Created Agency",
+          title: "Created Agency!",
         });
-        // if (data?.id) return router.refresh();
-        // if (response) {
-        //   return router.refresh();
-        // }
+        
+
         return router.refresh();
       }
     } catch (error) {
@@ -160,7 +159,7 @@ const AgencyDetails = ({ data }: Props) => {
       toast({
         variant: "destructive",
         title: "Oppse!",
-        description: "could not delete your agency ",
+        description: "Could not delete your Agency!",
       });
     }
   };
@@ -176,7 +175,7 @@ const AgencyDetails = ({ data }: Props) => {
 
       toast({
         title: "Deleted Agency",
-        description: "Deleted your agency and all subaccounts",
+        description: "Deleted your Agency and all Subaccounts!",
       });
 
       router.refresh();
@@ -184,7 +183,7 @@ const AgencyDetails = ({ data }: Props) => {
       console.error(error.message);
       toast({
         title: "Oppse!",
-        description: "Couldn't delete your agency",
+        description: "Couldn't delete your Agency!",
         variant: "destructive",
       });
     } finally {
@@ -325,7 +324,7 @@ const AgencyDetails = ({ data }: Props) => {
                     <FormItem className="flex-1">
                       <FormLabel>Country</FormLabel>
                       <FormControl>
-                        <Input placeholder="Pakistan" {...field} />
+                        <Input placeholder="Canada" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -340,7 +339,7 @@ const AgencyDetails = ({ data }: Props) => {
                     <FormItem className="flex-1">
                       <FormLabel>State</FormLabel>
                       <FormControl>
-                        <Input placeholder="Punjab" {...field} />
+                        <Input placeholder="Quebec" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -355,7 +354,7 @@ const AgencyDetails = ({ data }: Props) => {
                     <FormItem>
                       <FormLabel>City</FormLabel>
                       <FormControl>
-                        <Input placeholder="Gujrat" {...field} />
+                        <Input placeholder="Montreal" {...field} />
                       </FormControl>
                     </FormItem>
                   )}
@@ -369,7 +368,7 @@ const AgencyDetails = ({ data }: Props) => {
                     <FormItem>
                       <FormLabel>Zip Code</FormLabel>
                       <FormControl>
-                        <Input placeholder="50700" {...field} />
+                        <Input placeholder="H3G 1M9" {...field} />
                       </FormControl>
                     </FormItem>
                   )}
@@ -420,7 +419,7 @@ const AgencyDetails = ({ data }: Props) => {
               </div>
               <AlertDialogTrigger
                 disabled={isLoading || deletingAgency}
-                className="text-red-600 p-2 text-center mt-2 rounded-md hove:bg-red-600 hover:text-white whitespace-nowrap"
+                className="text-red-600 p-2 text-center mt-2 rounded-md hover:bg-red-600 hover:text-white whitespace-nowrap"
               >
                 {deletingAgency ? "Deleting..." : "Delete Agency"}
               </AlertDialogTrigger>
