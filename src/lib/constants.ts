@@ -30,8 +30,8 @@ import Warning from "@/components/icons/warning";
 
 export const SIGN_IN = "/sign-in";
 export const SIGN_UP = "/sign-up";
-export const AGENCY = "/agency";
-export const SUBACCOUNT = "/subaccount";
+export const AGENCY_SLUG = "/agency";
+export const SUBACCOUNT_SLUG = "/subaccount";
 
 export const AGENCY_OWNER = "AGENCY_OWNER";
 export const AGENCY_ADMIN = "AGENCY_ADMIN";

@@ -1,7 +1,7 @@
 "use client";
 
 import { Agency } from "@prisma/client";
-import  { v4 }  from "uuid";
+import { v4 } from "uuid";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -35,6 +35,7 @@ import { Input } from "../ui/input";
 import FormWrapper from "../ui/FormWrapper";
 import { Switch } from "../ui/switch";
 import { Button } from "../ui/button";
+import { useToast } from "../ui/use-toast";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -50,14 +51,13 @@ import {
 import { AGENCY_OWNER } from "@/lib/constants";
 import FileUpload from "../global/file-upload";
 import Loading from "../global/loading";
-import { useToast } from "../ui/use-toast";
 
 type Props = {
   data?: Partial<Agency>;
 };
 
 const FormSchema = z.object({
-  name: z.string().min(2, { message: "Agency name must be atleast 2 chars." }),
+  name: z.string().min(2, { message: "Agency name must be at least 2 chars." }),
   companyEmail: z.string().min(1),
   companyPhone: z.string().min(1),
   whiteLabel: z.boolean(),
@@ -100,8 +100,7 @@ const AgencyDetails = ({ data }: Props) => {
 
   const handleSubmit = async (values: z.infer<typeof FormSchema>) => {
     let newUserData;
-    // let customerId;
-
+    let custId;
     try {
       if (!data?.id) {
         const bodyData = {
@@ -126,11 +125,11 @@ const AgencyDetails = ({ data }: Props) => {
           },
         };
       }
-      // WIP: customerId
+      // WIP: custId
       newUserData = await initUser({ role: AGENCY_OWNER });
 
       if (!data?.id) {
-        await upsertAgency({
+        const response = await upsertAgency({
           id: data?.id ? data.id : v4(),
           address: values.address,
           agencyLogo: values.agencyLogo,
@@ -147,11 +146,21 @@ const AgencyDetails = ({ data }: Props) => {
           connectAccountId: "",
           goal: 5,
         });
-        toast({
-          title: "Created Agency!",
-        });
-        
 
+        console.log('AGENCY DETAILS from FORM: ', response?.id);
+
+        if (response?.id) {
+          toast({
+            title: "Created Agency!",
+          });
+          router.push(`/agency/${response?.id}`);
+
+        }
+        // if (data?.id) return router.refresh();
+        // if (response) {
+        //   return router.refresh();
+        // }
+        
         return router.refresh();
       }
     } catch (error) {
@@ -159,7 +168,7 @@ const AgencyDetails = ({ data }: Props) => {
       toast({
         variant: "destructive",
         title: "Oppse!",
-        description: "Could not delete your Agency!",
+        description: "could not delete your agency ",
       });
     }
   };
@@ -175,7 +184,7 @@ const AgencyDetails = ({ data }: Props) => {
 
       toast({
         title: "Deleted Agency",
-        description: "Deleted your Agency and all Subaccounts!",
+        description: "Deleted your agency and all subaccounts",
       });
 
       router.refresh();
@@ -183,7 +192,7 @@ const AgencyDetails = ({ data }: Props) => {
       console.error(error.message);
       toast({
         title: "Oppse!",
-        description: "Couldn't delete your Agency!",
+        description: "Couldn't delete your agency",
         variant: "destructive",
       });
     } finally {

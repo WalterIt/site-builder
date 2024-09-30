@@ -83,7 +83,7 @@ export const saveActivityLogsNotification = async ({
   if (!foundAgencyId) {
     if (!subaccountId) {
       throw new Error(
-        "You need to provide at least an agency ID for subacount ID"
+        "You need to provide at least an agency ID for subacount ID."
       );
     }
 
@@ -247,14 +247,25 @@ export const initUser = async (newUser: Partial<User>) => {
 
 export const upsertAgency = async (agency: Agency, price?: Plan) => {
   if (!agency.companyEmail) return null;
+  const user = await currentUser();
 
   try {
+
+
     const agencyDetails = await db.agency.upsert({
       where: { id: agency.id },
       update: agency,
       create: {
         users: {
-          connect: { email: agency.companyEmail },
+          connectOrCreate: {
+            where: { email: agency.companyEmail },
+            create: {
+              email: agency.companyEmail,
+              name: "MNotion User",
+              avatarUrl: user?.imageUrl ?? '',
+              // Add other required user data here
+            }
+          }
         },
         ...agency,
         SidebarOption: {
@@ -293,8 +304,7 @@ export const upsertAgency = async (agency: Agency, price?: Plan) => {
         },
       },
     });
-
-    console.log(agencyDetails);
+    console.log('THIS IS THE AGENT DETAILS:', agencyDetails);
 
     return agencyDetails;
   } catch (error: any) {
