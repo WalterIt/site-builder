@@ -261,7 +261,7 @@ export const upsertAgency = async (agency: Agency, price?: Plan) => {
             where: { email: agency.companyEmail },
             create: {
               email: agency.companyEmail,
-              name: "MNotion User",
+              name: agency.name,
               avatarUrl: user?.imageUrl ?? '',
               // Add other required user data here
             }
@@ -309,5 +309,18 @@ export const upsertAgency = async (agency: Agency, price?: Plan) => {
     return agencyDetails;
   } catch (error: any) {
     console.error(error.message);
+  }
+};
+
+export const getNotificationAndUser = async (agencyId: string) => {
+  try {
+    const response = await db.notification.findMany({
+      where: { agencyId },
+      include: { User: true },
+      orderBy: { createdAt: "desc" },
+    });
+    return response;
+  } catch (error) {
+    console.error(error);
   }
 };
