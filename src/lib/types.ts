@@ -8,15 +8,15 @@ import {
     Ticket,
     User,
   } from "@prisma/client";
-  // import {
-  //   _getTicketsWithAllRelations,
-  //   getAuthUserDetails,
-  //   getFunnels,
-  //   getMedia,
-  //   getPipelineDetails,
-  //   getTicketsWithTags,
-  //   getUserPermissions,
-  // } from "./queries";
+  import {
+    _getTicketsWithAllRelations,
+    getAuthUserDetails,
+    // getFunnels,
+    // getMedia,
+    // getPipelineDetails,
+    // getTicketsWithTags,
+    getUserPermissions,
+  } from "./queries";
   import { db } from "./db";
   import { z } from "zod";
   
@@ -149,3 +149,9 @@ import {
   // >[0];
   
   export type UpsertFunnelPage = Prisma.FunnelPageCreateWithoutFunnelInput;
+
+
+  export type UserWithPermissionsAndSubAccounts = Prisma.PromiseReturnType<typeof getUserPermissions>;
+
+  export type AuthUserWithAgencySigebarOptionsSubAccounts = Prisma.PromiseReturnType<typeof getAuthUserDetails>;
+
