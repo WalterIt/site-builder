@@ -44,7 +44,7 @@ export const saveActivityLogsNotification = async ({
   description,
   subaccountId,
 }: {
-  agencyId: string;
+  agencyId?: string;
   description: string;
   subaccountId?: string;
 }) => {
@@ -448,5 +448,26 @@ export const changeUserPermissions = async (
     return response;
   } catch (error) {
     console.log("🔴Could not change persmission!", error);
+  }
+};
+
+export const getSubaccountDetails = async (subAccountId: string) => {
+  try {
+    const response = await db.subAccount.findFirst({
+      where: { id: subAccountId },
+    });
+    return response;
+  } catch (error) {
+    console.log("🔴 Error: Couldn't find sub account details.", error);
+  }
+};
+export const deleteSubAccount = async (subAccountId: string) => {
+  try {
+    const response = await db.subAccount.delete({
+      where: { id: subAccountId },
+    });
+    return response;
+  } catch (error) {
+    console.log("🔴 Error: Couldn't delete sub account.", error);
   }
 };
