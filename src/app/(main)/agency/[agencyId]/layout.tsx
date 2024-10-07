@@ -1,6 +1,6 @@
 import BlurPage from "@/components/global/blur-page";
 import Sidebar from "@/components/sidebar";
-import InfoBar from "@/components/global/inforbar";
+import InfoBar from "@/components/global/infobar";
 import Unauthorized from "@/components/unauthorized";
 import { AGENCY_ADMIN, AGENCY_OWNER } from "@/lib/constants";
 import {
