@@ -1,49 +1,50 @@
-import { getAuthUserDetails } from "@/lib/queries";
-import { off } from "process";
-import React from "react";
-import MenuOptions from "./menu-options";
+import { getAuthUserDetails } from '@/lib/queries'
+// import { off } from 'process'
+import React from 'react'
+import MenuOptions from './menu-options'
 
 type Props = {
-  id: string;
-  type: "agency" | "subaccount";
-};
+  id: string
+  type: 'agency' | 'subaccount'
+}
 
 const Sidebar = async ({ id, type }: Props) => {
-  const user = await getAuthUserDetails();
-  if (!user) return null;
-  if (!user.Agency) return;
+  const user = await getAuthUserDetails()
+  if (!user) return null
+
+  if (!user.Agency) return
 
   const details =
-    type === "agency"
+    type === 'agency'
       ? user?.Agency
-      : user?.Agency.SubAccount.find((subaccount) => subaccount.id === id);
+      : user?.Agency.SubAccount.find((subaccount) => subaccount.id === id)
 
-  if (!details) return;
+  const isWhiteLabeledAgency = user.Agency.whiteLabel
+  if (!details) return
 
-  const isWhiteLabeledAgency = user.Agency.whiteLabel;
-  
-  let sideBarLogo = user.Agency.agencyLogo || "/assets/plura-logo.svg";
+  let sideBarLogo = user.Agency.agencyLogo || '/assets/plura-logo.svg'
 
   if (!isWhiteLabeledAgency) {
-    if (type === "subaccount") {
+    if (type === 'subaccount') {
       sideBarLogo =
         user?.Agency.SubAccount.find((subaccount) => subaccount.id === id)
-          ?.subAccountLogo || user.Agency.agencyLogo;
+          ?.subAccountLogo || user.Agency.agencyLogo
     }
   }
+
   const sidebarOpt =
-    type === "agency"
+    type === 'agency'
       ? user.Agency.SidebarOption || []
       : user.Agency.SubAccount.find((subaccount) => subaccount.id === id)
-          ?.SidebarOption || [];
+          ?.SidebarOption || []
 
   const subaccounts = user.Agency.SubAccount.filter((subaccount) =>
     user.Permissions.find(
       (permission) =>
         permission.subAccountId === subaccount.id && permission.access
     )
-  );
-  
+  )
+
   return (
     <>
       <MenuOptions
@@ -64,6 +65,7 @@ const Sidebar = async ({ id, type }: Props) => {
         user={user}
       />
     </>
-  );
-};
-export default Sidebar;
+  )
+}
+
+export default Sidebar
