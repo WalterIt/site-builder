@@ -91,17 +91,12 @@ B (255 */
 }
 
 @layer base {
-  
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
-@layer {
   * {
     @apply border-border;
   }
-
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 
 .dotPattern {

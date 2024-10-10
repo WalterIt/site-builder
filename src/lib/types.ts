@@ -13,8 +13,8 @@ import {
     getAuthUserDetails,
     getMedia,
     // getFunnels,
-    // getPipelineDetails,
-    // getTicketsWithTags,
+    getPipelineDetails,
+    getTicketsWithTags,
     getUserPermissions,
   } from "./queries";
   import { db } from "./db";
@@ -91,17 +91,17 @@ import {
     favicon: z.string().optional(),
   });
   
-  // export type PipelineDetailsWithLanesCardsTagsTickets = Prisma.PromiseReturnType<
-  //   typeof getPipelineDetails
-  // >;
+  export type PipelineDetailsWithLanesCardsTagsTickets = Prisma.PromiseReturnType<
+    typeof getPipelineDetails
+  >;
   
   export const LaneFormSchema = z.object({
     name: z.string().min(1),
   });
   
-  // export type TicketWithTags = Prisma.PromiseReturnType<
-  //   typeof getTicketsWithTags
-  // >;
+  export type TicketWithTags = Prisma.PromiseReturnType<
+    typeof getTicketsWithTags
+  >;
   
   const currencyNumberRegex = /^\d+(\.\d{1,2})?$/;
   
