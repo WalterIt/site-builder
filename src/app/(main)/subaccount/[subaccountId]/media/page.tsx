@@ -1,6 +1,7 @@
 import BlurPage from '@/components/global/blur-page'
+import MediaComponent from '@/components/media'
 // import MediaComponent from '@/components/media'
-// import { getMedia } from '@/lib/queries'
+import { getMedia } from '@/lib/queries'
 import React from 'react'
 
 type Props = {
@@ -8,15 +9,14 @@ type Props = {
 }
 
 const MediaPage = async ({ params }: Props) => {
-//   const data = await getMedia(params.subaccountId)
+  const data = await getMedia(params.subaccountId)
 
   return (
     <BlurPage>
-      {/* <MediaComponent
+      <MediaComponent
         data={data}
         subaccountId={params.subaccountId}
-      /> */}
-      <p>Media Page</p>
+      />
     </BlurPage>
   )
 }
