@@ -729,7 +729,7 @@ export const getSubAccountTeamMembers = async (subaccountId: string) => {
   return subaccountUsersWithAccess
 }
 
-export const searchContacts = async (searchTerms: string) => {
+export const  searchContacts = async (searchTerms: string) => {
   const response = await db.contact.findMany({
     where: {
       name: {
@@ -804,6 +804,32 @@ export const getTagsForSubaccount = async (subaccountId: string) => {
 
 export const deleteTag = async (tagId: string) => {
   const response = await db.tag.delete({ where: { id: tagId } })
+  return response
+}
+
+
+export const getTicketsWithTags = async (pipelineId: string) => {
+  const response = await db.ticket.findMany({
+    where: {
+      Lane: {
+        pipelineId,
+      },
+    },
+    include: { Tags: true, Assigned: true, Customer: true },
+  })
+  return response
+}
+
+export const _getTicketsWithAllRelations = async (laneId: string) => {
+  const response = await db.ticket.findMany({
+    where: { laneId: laneId },
+    include: {
+      Assigned: true,
+      Customer: true,
+      Lane: true,
+      Tags: true,
+    },
+  })
   return response
 }
 
