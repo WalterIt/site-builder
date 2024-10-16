@@ -83,6 +83,7 @@ const TagCreator = ({ getSelectedTags, subAccountId, defaultTags }: Props) => {
       })
       return
     }
+
     const tagData: Tag = {
       color: selectedColor,
       createdAt: new Date(),
@@ -98,7 +99,7 @@ const TagCreator = ({ getSelectedTags, subAccountId, defaultTags }: Props) => {
     try {
       const response = await upsertTag(subAccountId, tagData)
       toast({
-        title: 'Created the tag',
+        title: 'Created the tag!',
       })
 
       await saveActivityLogsNotification({

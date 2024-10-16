@@ -31,7 +31,7 @@ const TagComponent: React.FC<TagComponentProps> = ({
         if (selectedColor) selectedColor(colorName)
       }}
     >
-      {title}
+      {title} 
     </div>
   )
 }
